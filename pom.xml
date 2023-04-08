@@ -64,7 +64,7 @@
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.26</org.projectlombok.version>
         <!--Surefire plugin argLine value to suppress UnresolvedMavenProperty -->
-        <argLine>--illegal-access=permit</argLine>
+<!--        <argLine>&#45;&#45;illegal-access=permit</argLine>-->
         <!-- Web dependencies -->
         <webjars-bootstrap.version>3.4.0</webjars-bootstrap.version>
         <webjars-jquery-ui.version>1.13.0</webjars-jquery-ui.version>
