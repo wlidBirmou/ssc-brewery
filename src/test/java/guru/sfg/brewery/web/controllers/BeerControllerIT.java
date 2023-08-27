@@ -12,8 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by jt on 6/12/20.
  */
 @WebMvcTest
-public class BeerControllerIT extends BaseIT{
-
+public class BeerControllerIT extends BaseIT {
     @WithMockUser("spring")
     @Test
     void findBeers() throws Exception{
@@ -22,7 +21,6 @@ public class BeerControllerIT extends BaseIT{
                 .andExpect(view().name("beers/findBeers"))
                 .andExpect(model().attributeExists("beer"));
     }
-
     @Test
     void findBeersWithHttpBasic() throws Exception{
         mockMvc.perform(get("/beers/find").with(httpBasic("spring", "guru")))
@@ -30,8 +28,4 @@ public class BeerControllerIT extends BaseIT{
                 .andExpect(view().name("beers/findBeers"))
                 .andExpect(model().attributeExists("beer"));
     }
-
-
-
-
 }
