@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authRequest) -> {
                     authRequest.requestMatchers(mvc.pattern("/"),
                                     mvc.pattern("/webjars/**"), mvc.pattern("/resources/**"),
-                                    mvc.pattern("/login"))
+                                    mvc.pattern("/login"), mvc.pattern("/beers/find"))
                             .permitAll()
                             .anyRequest().authenticated();
                 })
