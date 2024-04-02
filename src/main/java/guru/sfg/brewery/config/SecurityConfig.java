@@ -40,7 +40,6 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Override
     @Bean
     protected UserDetailsService userDetailsService() {
         UserDetails admin = User.withDefaultPasswordEncoder()
