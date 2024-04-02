@@ -1,4 +1,4 @@
-package guru.sfg.brewery.web.controllers.api;
+package guru.sfg.brewery.api;
 
 import guru.sfg.brewery.web.controllers.BaseIT;
 import org.junit.jupiter.api.Test;
@@ -13,9 +13,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 public class BeerRestControllerIT extends BaseIT {
 
+
     @Test
     void findBeers() throws Exception{
-        mockMvc.perform(get("/api/v1/beer/"))
+        mockMvc.perform(get("/api/v1/beer"))
                 .andExpect(status().isOk());
     }
 
