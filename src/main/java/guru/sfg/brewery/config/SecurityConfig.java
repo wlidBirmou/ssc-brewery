@@ -2,37 +2,42 @@ package guru.sfg.brewery.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 /**
- * Created by jt on 6/13/20.
+ * Created by jt, Spring Framework Guru.
  */
-@Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+public class SecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-                http
-                .authorizeRequests(authorize -> {
-                    authorize
-                            .antMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll()
-                            .antMatchers("/beers/find", "/beers*").permitAll()
-                            .antMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
-                            .mvcMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").permitAll();
-                } )
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().and()
-                .httpBasic();
+    @Bean
+    MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector){
+        return new MvcRequestMatcher.Builder(introspector);
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+        return http
+                .authorizeHttpRequests((authRequest) -> {
+                    authRequest.requestMatchers(mvc.pattern("/"),
+                                    mvc.pattern("/webjars/**"), mvc.pattern("/resources/**"),
+                                    mvc.pattern("/login"))
+                            .permitAll()
+                            .anyRequest().authenticated();
+                })
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
+                .build();
     }
 
     @Override
