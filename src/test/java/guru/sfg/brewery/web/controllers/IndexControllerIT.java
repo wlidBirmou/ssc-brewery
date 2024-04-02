@@ -7,10 +7,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Created by jt on 6/13/20.
+ * Created by jt, Spring Framework Guru.
  */
 @WebMvcTest
-public class IndexControllerIT extends BaseIT {
+public class IndexControllerIT  extends BaseIT {
 
     @Test
     void testGetIndexSlash() throws Exception{

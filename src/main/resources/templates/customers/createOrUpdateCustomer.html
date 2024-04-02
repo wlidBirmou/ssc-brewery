@@ -10,7 +10,7 @@
     <form th:object="${customer}" class="form-horizontal" id="add-customer-form" method="post">
     <div class="form-group has-feedback">
         <input type="hidden" th:field="*{id}" />
-
+        <input type="hidden" th:field="*{version}" />
         <input
                 th:replace="~{fragments/inputField :: input ('Customer Name', 'customerName', 'text')}" />
 
