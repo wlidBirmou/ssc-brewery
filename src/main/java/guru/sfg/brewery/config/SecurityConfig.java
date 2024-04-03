@@ -1,5 +1,6 @@
 package guru.sfg.brewery.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
@@ -26,10 +27,13 @@ public class SecurityConfig {
                 .username("spring")
                 .password("guru")
                 .roles("ADMIN")
-                .and()
-                .withUser("user")
-                .password("{noop}password")
-                .roles("USER");
+                .build();
+
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build();
 
         UserDetails userScott = User.withDefaultPasswordEncoder()
                 .username("scott")
@@ -39,24 +43,6 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(admin, user, userScott);
     }
-
-    //    @Override
-//    @Bean
-//    protected UserDetailsService userDetailsService() {
-//        UserDetails admin = User.withDefaultPasswordEncoder()
-//                .username("spring")
-//                .password("guru")
-//                .roles("ADMIN")
-//                .build();
-//
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                .username("user")
-//                .password("password")
-//                .roles("USER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(admin, user);
-//    }
 
     @Bean
     MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector){
@@ -80,6 +66,5 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
-
 
 }
