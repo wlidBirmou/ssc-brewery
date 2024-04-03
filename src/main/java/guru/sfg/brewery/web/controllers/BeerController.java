@@ -21,6 +21,8 @@ package guru.sfg.brewery.web.controllers;
 import guru.sfg.brewery.domain.Beer;
 import guru.sfg.brewery.repositories.BeerInventoryRepository;
 import guru.sfg.brewery.repositories.BeerRepository;
+import guru.sfg.brewery.web.model.BeerStyleEnum;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +36,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -88,6 +90,7 @@ public class BeerController {
     @GetMapping("/new")
     public String initCreationForm(Model model) {
         model.addAttribute("beer", Beer.builder().build());
+        model.addAttribute("beerStyles", Arrays.stream(BeerStyleEnum.values()).map(BeerStyleEnum::name).toList());
         return "beers/createBeer";
     }
 
@@ -109,8 +112,10 @@ public class BeerController {
 
     @GetMapping("/{beerId}/edit")
     public String initUpdateBeerForm(@PathVariable UUID beerId, Model model) {
-        if (beerRepository.findById(beerId).isPresent())
+        if (beerRepository.findById(beerId).isPresent()) {
             model.addAttribute("beer", beerRepository.findById(beerId).get());
+        }
+        model.addAttribute("beerStyles", Arrays.stream(BeerStyleEnum.values()).map(BeerStyleEnum::name).toList());
         return "beers/createOrUpdateBeer";
     }
 
